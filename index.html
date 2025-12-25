@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROXIMA OFFICIAL</title>
+
+<style>
+/* IMPORTANT FIX */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.box {
+    background: rgba(0,0,0,0.6);
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 15px;
+    padding: 12px;
+    width: 100%;
+    border-radius: 6px;
+    border: none;
+    background: #00c6ff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00e5ff;
+}
+
+.timer {
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+a.download {
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+    background: #00ff99;
+    color: black;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+    <h2>PROXIMA OFFICIAL</h2>
+    <p>Enter Verification Key</p>
+
+    <input type="text" id="key" placeholder="Entar Key">
+
+    <button onclick="verify()">Verify</button>
+    <div class="timer" id="timer1"></div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+    <h2>PROXIMA OFFICIAL</h2>
+    <h2>Proxima Panel ensures secure access with advanced verification and timed protection for safe downloads.</h2>
+    <button onclick="startSecondTimer()">Continue</button>
+    <div class="timer" id="timer2"></div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+    <h2>Download Ready</h2>
+    <a class="download"
+       href="https://www.mediafire.com/file/7w8izgbdu4o9c3x/ARIFUL_DEVLOPER_TOLS.zip/file"
+       download>
+        Download
+    </a>
+</div>
+
+</div>
+
+<script>
+function verify() {
+    const key = document.getElementById("key").value;
+
+    if (key !== "PROXIMA-SOURE") {
+        alert("Invalid Key");
+        return;
+    }
+
+    let time = 10;
+    const timer = document.getElementById("timer1");
+    timer.innerHTML = time;
+
+    let interval = setInterval(() => {
+        time--;
+        timer.innerHTML = time;
+
+        if (time === 0) {
+            clearInterval(interval);
+            showPage(2);
+        }
+    }, 1000);
+}
+
+function startSecondTimer() {
+    let time = 10;
+    const timer = document.getElementById("timer2");
+    timer.innerHTML = time;
+
+    let interval = setInterval(() => {
+        time--;
+        timer.innerHTML = time;
+
+        if (time === 0) {
+            clearInterval(interval);
+            showPage(3);
+        }
+    }, 1000);
+}
+
+function showPage(pageNumber) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById("page" + pageNumber).classList.add("active");
+}
+</script>
+
+</body>
+</html>
