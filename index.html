@@ -3,164 +3,275 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PROXIMA OFFICIAL</title>
+<title>Proxima Official System</title>
 
 <style>
-/* IMPORTANT FIX */
-* {
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{
+    min-height:100dvh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#1e3a44,#2f5964);
+}
+.card{
+    width:90%;
+    max-width:380px;
+    background:#0f1f26;
+    padding:30px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+    animation:fadeIn .8s ease;
+}
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(25px)}
+    to{opacity:1;transform:translateY(0)}
+}
+.step{animation:slide .5s ease}
+@keyframes slide{
+    from{opacity:0;transform:translateY(15px)}
+    to{opacity:1;transform:translateY(0)}
+}
+.shake{animation:shake .35s}
+@keyframes shake{
+    0%{transform:translateX(0)}
+    25%{transform:translateX(-5px)}
+    50%{transform:translateX(5px)}
+    75%{transform:translateX(-5px)}
+    100%{transform:translateX(0)}
+}
+h2{color:#fff;margin-bottom:10px}
+p{color:#cfd8dc;margin-bottom:20px;font-size:14px}
+input,button{
+    width:100%;
+    padding:14px;
+    margin-bottom:14px;
+    border-radius:8px;
+    border:none;
+    outline:none;
+    font-size:15px;
+}
+button{
+    background:#00bfff;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+button:hover{background:#00a6e6}
+.message{font-size:14px;margin-top:10px}
+.error{color:#ff6b6b}
+.success{color:#4caf50}
+.hidden{display:none}
+.timer{color:#ffd54f;font-size:18px;margin-top:10px}
+
+.codeBox{
+    background:#08161c;
+    color:#00e5ff;
+    padding:10px;
+    border-radius:6px;
+    margin-bottom:6px;
+    font-weight:bold;
+    letter-spacing:1px;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+.copyBtn{
+    background:#263238;
+    color:#00e5ff;
+    font-size:13px;
+    padding:8px;
+    margin-bottom:12px;
 }
 
-.box {
-    background: rgba(0,0,0,0.6);
-    padding: 25px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 320px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+.hacker{
+    font-family:monospace;
+    color:#00ff9c;
+    letter-spacing:2px;
+    margin-top:10px;
+    font-size:14px;
 }
 
-input {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    border-radius: 6px;
-    border: none;
-    outline: none;
-    font-size: 16px;
+/* 🔥 PROFESSIONAL DOWNLOAD BUTTON */
+.download-btn{
+    background:linear-gradient(135deg,#00e5ff,#2979ff,#7c4dff);
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    letter-spacing:1px;
+    box-shadow:0 0 15px rgba(0,229,255,.4);
+    transition:.35s ease;
 }
-
-button {
-    margin-top: 15px;
-    padding: 12px;
-    width: 100%;
-    border-radius: 6px;
-    border: none;
-    background: #00c6ff;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #00e5ff;
-}
-
-.timer {
-    margin-top: 15px;
-    font-size: 20px;
-}
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-a.download {
-    display: block;
-    margin-top: 20px;
-    text-decoration: none;
-    background: #00ff99;
-    color: black;
-    padding: 12px;
-    border-radius: 6px;
-    font-weight: bold;
+.download-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 25px rgba(124,77,255,.8);
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="card">
 
-<!-- PAGE 1 -->
-<div class="page active" id="page1">
-    <h2>PROXIMA OFFICIAL</h2>
-    <p>Enter Verification Key</p>
-
-    <input type="text" id="key" placeholder="Entar Key">
-
-    <button onclick="verify()">Verify</button>
-    <div class="timer" id="timer1"></div>
+<!-- STEP 1 -->
+<div id="step1" class="step">
+<h2>PROXIMA OFFICIAL</h2>
+<p>Enter Verification Key</p>
+<input type="text" id="keyInput" placeholder="Enter Key">
+<button onclick="verifyKey()">Verify</button>
+<div id="msg1" class="message"></div>
 </div>
 
-<!-- PAGE 2 -->
-<div class="page" id="page2">
-    <h2>PROXIMA OFFICIAL</h2>
-    <h2></h2>
-    <button onclick="startSecondTimer()">Continue</button>
-    <div class="timer" id="timer2"></div>
+<!-- STEP 1.5 -->
+<div id="step1_5" class="hidden step">
+<h2>Verifying Key…</h2>
+<div class="hacker" id="hackVerify">AUTH...</div>
+<div class="timer" id="verifyTimer">5</div>
 </div>
 
-<!-- PAGE 3 -->
-<div class="page" id="page3">
-    <h2>Download Ready</h2>
-    <a class="download"
-       href="https://www.instagram.com/ariful_official24?igsh=MTducWdxOXp4ZXV1MA=="
-       download>
-        Download
-    </a>
+<!-- STEP 2 -->
+<div id="step2" class="hidden step">
+<h2>PROXIMA OFFICIAL.site</h2>
+<p>Click continue to proceed</p>
+<button onclick="startTimer1()">Continue</button>
+</div>
+
+<!-- STEP 3 -->
+<div id="step3" class="hidden step">
+<h2>Please Wait</h2>
+<p>System Preparing…</p>
+<div class="hacker" id="hackText">INIT...</div>
+<div class="timer" id="timer1">20</div>
+</div>
+
+<!-- STEP 4 -->
+<div id="step4" class="hidden step">
+<h2>🔒 Lock System</h2>
+<p>Your One-Time Password</p>
+
+<div class="codeBox" id="autoPass"></div>
+<button class="copyBtn" onclick="copyPassword()">📋 Copy Password</button>
+
+<input type="password" id="lockPass" placeholder="Enter Password">
+<button onclick="unlock()">Unlock</button>
+<div id="msg4" class="message"></div>
+</div>
+
+<!-- STEP 5 -->
+<div id="step5" class="hidden step">
+<h2>Success 🎉</h2>
+<p>Access Granted</p>
+<div class="timer" id="timer2">10</div>
+</div>
+
+<!-- STEP 6 -->
+<div id="step6" class="hidden step">
+<h2>Download Ready</h2>
+<a href="https://www.mediafire.com/file/7w8izgbdu4o9c3x/ARIFUL_DEVLOPER_TOLS.zip/file">
+<button class="download-btn">⬇ Download Now</button>
+</a>
 </div>
 
 </div>
 
 <script>
-function verify() {
-    const key = document.getElementById("key").value;
+const validKeys=["PROXIMA123","VIP999","ASHMINA","Proxima"];
+let generatedPassword="";
+const hackChars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%";
 
-    if (key !== "PROXIMA-SOURE") {
-        alert("Invalid Key");
-        return;
+function runHacker(id,d){
+    const el=document.getElementById(id);
+    const i=setInterval(()=>{
+        let t="";
+        for(let j=0;j<12;j++)t+=hackChars[Math.floor(Math.random()*hackChars.length)];
+        el.innerText=t;
+    },80);
+    setTimeout(()=>clearInterval(i),d);
+}
+
+function verifyKey(){
+    if(validKeys.includes(keyInput.value.trim())){
+        msg1.innerHTML="✅ Key Accepted";
+        msg1.className="message success";
+        setTimeout(()=>{
+            step1.classList.add("hidden");
+            step1_5.classList.remove("hidden");
+            runHacker("hackVerify",5000);
+            let t=5;
+            const i=setInterval(()=>{
+                verifyTimer.innerText=t--;
+                if(t<0){
+                    clearInterval(i);
+                    step1_5.classList.add("hidden");
+                    step2.classList.remove("hidden");
+                }
+            },1000);
+        },600);
+    }else{
+        msg1.innerHTML="❌ Invalid Key";
+        msg1.className="message error";
+        step1.classList.add("shake");
+        setTimeout(()=>step1.classList.remove("shake"),300);
     }
-
-    let time = 10;
-    const timer = document.getElementById("timer1");
-    timer.innerHTML = time;
-
-    let interval = setInterval(() => {
-        time--;
-        timer.innerHTML = time;
-
-        if (time === 0) {
-            clearInterval(interval);
-            showPage(2);
-        }
-    }, 1000);
 }
 
-function startSecondTimer() {
-    let time = 10;
-    const timer = document.getElementById("timer2");
-    timer.innerHTML = time;
-
-    let interval = setInterval(() => {
-        time--;
-        timer.innerHTML = time;
-
-        if (time === 0) {
-            clearInterval(interval);
-            showPage(3);
-        }
-    }, 1000);
+function generatePassword(){
+    const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let p="Proxima-";
+    for(let i=0;i<4;i++)p+=c[Math.floor(Math.random()*c.length)];
+    return p;
 }
 
-function showPage(pageNumber) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    document.getElementById("page" + pageNumber).classList.add("active");
+function startTimer1(){
+    step2.classList.add("hidden");
+    step3.classList.remove("hidden");
+    runHacker("hackText",20000);
+    let t=20;
+    const i=setInterval(()=>{
+        timer1.innerText=t--;
+        if(t<0){
+            clearInterval(i);
+            step3.classList.add("hidden");
+            step4.classList.remove("hidden");
+            generatedPassword=generatePassword();
+            autoPass.innerText=generatedPassword;
+        }
+    },1000);
+}
+
+function copyPassword(){
+    navigator.clipboard.writeText(generatedPassword);
+    msg4.innerHTML="📋 Password Copied!";
+    msg4.className="message success";
+}
+
+function unlock(){
+    if(lockPass.value.trim()===generatedPassword){
+        generatedPassword="";
+        msg4.innerHTML="✅ Unlocked Successfully";
+        msg4.className="message success";
+        setTimeout(()=>{
+            step4.classList.add("hidden");
+            step5.classList.remove("hidden");
+            startTimer2();
+        },800);
+    }else{
+        msg4.innerHTML="❌ Wrong Password";
+        msg4.className="message error";
+        step4.classList.add("shake");
+        setTimeout(()=>step4.classList.remove("shake"),300);
+    }
+}
+
+function startTimer2(){
+    let t=10;
+    const i=setInterval(()=>{
+        timer2.innerText=t--;
+        if(t<0){
+            clearInterval(i);
+            step5.classList.add("hidden");
+            step6.classList.remove("hidden");
+        }
+    },1000);
 }
 </script>
 
